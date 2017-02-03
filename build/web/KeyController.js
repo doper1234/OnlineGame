@@ -8,28 +8,34 @@
 //onkeypress
 //onkeyup
 
-function keyController(event) {
+window.onkeydown = function () {
     var x = event.keyCode;
-    if (x === 38) {  //UP
-        alert ("You pressed the Escape key!");
+    
+    if (x === Keys.Up) {  //UP Added else so only one can be pressed at once
     }
-    if (x === 40) {  //down
-        alert ("You pressed the Escape key!");
+    else if (x === Keys.Down) {  //down
     }
-    if (x === 37) {  //LEFT
-        alert ("You pressed the Escape key!");
+    else if (x === Keys.Left) {  //LEFT
     }
-    if (x === 39) {  //right
-        alert ("You pressed the Escape key!");
+    else if (x === Keys.Right) {  //right
     }
-    if (x === 32) {  //SPACE
-        alert ("You pressed the Escape key!");
+    if (x === Keys.Space) {  //SPACE
     }
-    if (x === 13) {  //ENTER
-        alert ("You pressed the Escape key!");
+    if (x === Keys.Enter) {  //ENTER
     }
-    if (x === 65) {  //A, numbers go up alphabetically from A
-        alert ("You pressed the Escape key!");
+    if (x === Keys.A) {  //A, numbers go up alphabetically from A
     }
     
+};
+
+function Keys(){
+    
+    this.Up = 38;
+    this.Down = 40;
+    this.Left = 37;
+    this.Right = 39;
+    this.Space = 32;
+    this.Enter = 13;
+    this.A = 65; //numbers go up from A
+    this.B = 66;
 }

@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
-function Enemy(){
+function gameController(){
+    this.gameOver = false;
+    this.levelComplete = false;
+    this.levelStart = false;
+    this.enemies = new Enemy[20];
+    
     
 }
