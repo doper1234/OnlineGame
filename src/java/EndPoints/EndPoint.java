@@ -1,3 +1,4 @@
+package EndPoints;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,7 +17,6 @@ import javax.websocket.*;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-package EndPoints;
 
 @ServerEndpoint("/websocket/chat")
 public class EndPoint {
@@ -32,7 +32,7 @@ public class EndPoint {
  */
     
     int playerNumber = 0;
-    static List<Endpoint> clients = new CopyOnWriteArrayList<>();
+    static List<EndPoint> clients = new CopyOnWriteArrayList<>();
     Session session;
     
     @OnOpen
@@ -76,7 +76,7 @@ public class EndPoint {
         //System.out.println(number + "p is moving right?");
         System.out.println(message);
         
-        for(ChatEndpoint client : clients){
+        for(EndPoint client : clients){
             if(clients.get(number-1) != client){
                 try {
                     client.session.getBasicRemote().sendText(/*playerNumber + " " +*/message);
@@ -103,4 +103,3 @@ public class EndPoint {
     }
 }
 
-}
