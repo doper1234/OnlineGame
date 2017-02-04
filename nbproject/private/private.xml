@@ -3,14 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/images/Player.js</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/images/GameController.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Player.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/EndPoints/EndPoint.java</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Entity.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/index.html</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/main.js</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/images/Enemy.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/GameController.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/WebsocketInitializer.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/KeyController.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/conf/MANIFEST.MF</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Enemy.js</file>
         </group>
     </open-files>
 </project-private>

@@ -1,30 +1,17 @@
 package EndPoints;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
-*/
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
-import javax.websocket.MessageHandler;
 import javax.websocket.*;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 
-@ServerEndpoint("/websocket/chat")
+@ServerEndpoint("/game")
 public class EndPoint {
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -72,11 +59,18 @@ public class EndPoint {
     
     private void broadcast(String message){
         String[] result = message.split(" ");
-        int number = Integer.parseInt(result[0]);
+        int number = 0;
+        try {
+            number = Integer.parseInt(result[0]);
+        }
+        catch(NumberFormatException e){
+            
+        }
         //System.out.println(number + "p is moving right?");
         System.out.println(message);
         
         for(EndPoint client : clients){
+            try{
             if(clients.get(number-1) != client){
                 try {
                     client.session.getBasicRemote().sendText(/*playerNumber + " " +*/message);
@@ -99,6 +93,10 @@ public class EndPoint {
 //                    
 //                } 
 //            }
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
