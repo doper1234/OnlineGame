@@ -8,16 +8,20 @@
 //onkeypress
 //onkeyup
 
-window.onkeydown = function () {
+window.onkeydown = function (event) {
     var x = event.keyCode;
-    
-    if (x === Keys.Up) {  //UP Added else so only one can be pressed at once
+    console.log(x);
+    if (x === /*Keys.Up*/38) {  //UP Added else so only one can be pressed at once
+        sendMessage(playerNumber + ", up");
     }
-    else if (x === Keys.Down) {  //down
+    else if (x === /*Keys.Down*/ 40) {  //down
+        sendMessage(playerNumber + ", down");
     }
-    else if (x === Keys.Left) {  //LEFT
+    else if (x === /*Keys.Left*/ 37) {  //LEFT
+        sendMessage(playerNumber + ", left");
     }
-    else if (x === Keys.Right) {  //right
+    else if (x === /*Keys.Right*/39) {  //right
+        sendMessage(playerNumber + ", right");
     }
     if (x === Keys.Space) {  //SPACE
     }

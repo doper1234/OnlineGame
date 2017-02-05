@@ -42,6 +42,38 @@
         };
 }());
 
+function Player(imageLocation){
+    this.X = 100;
+    this.Y = 100;
+    this.Image = new Image(imageLocation);        
+}
+
+var players = [];
+var player1;
+var player2;
+
+window.onload = function(){
+    player1 = new Player("/Online2D/images/mario.png");
+    player2 = new Player("/Online2D/images/player1.png");
+    players.push(player1);
+    players.push(player2);
+    
+    setInterval(function () {
+
+        var canvas = document.getElementById("coinAnimation");
+        var context = canvas.getContext("2d");
+        console.log("draw?");
+      //  context.drawImage(player1.Image, player1.X, player1.Y);
+      //  context.drawImage(player2.Image, player2.X, player2.Y);
+        context.drawImage(new Image("/Online2D/images/mario.png"), 400, 100);
+        context.drawImage(new Image("/Online2D/images/player1.png"), 300, 150);
+        console.log("draw???");
+    }, 3000);
+};
+
+
+
+
 (function () {
 			
 	var coin,
@@ -90,20 +122,20 @@
 		that.render = function () {
 		
 		  // Clear the canvas
-		  that.context.clearRect(0, 0, that.width, that.height);
+		  //that.context.clearRect(0, 0, that.width, that.height);
                   
 		  
 		  // Draw the animation
-		  that.context.drawImage(
-		    that.image,
-		    frameIndex * that.width / numberOfFrames,
-		    0,
-		    that.width / numberOfFrames,
-		    that.height,
-		    0,
-		    0,
-		    that.width / numberOfFrames,
-		    that.height);
+//		  that.context.drawImage(
+//		    that.image,
+//		    frameIndex * that.width / numberOfFrames,
+//		    0,
+//		    that.width / numberOfFrames,
+//		    that.height,
+//		    0,
+//		    0,
+//		    that.width / numberOfFrames,
+//		    that.height);
 		};
 		
 		return that;
@@ -115,8 +147,8 @@
 	canvas.height = 600;
         
         var context = canvas.getContext("2d");
-        context.fillStyle = "#FFFFFF";
-        context.fill();
+        //context.fillStyle = "#FFFFFF";
+        //context.fill();
         
 	// Create sprite sheet
 	coinImage = new Image();	

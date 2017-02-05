@@ -4,14 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Player.js</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/EndPoints/EndPoint.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Entity.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/index.html</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Server/EndPoint.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/main.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/GameController.js</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/WebsocketInitializer.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Websocket.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/KeyController.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Game.java</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/conf/MANIFEST.MF</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Tank.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Entity.js</file>
             <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Enemy.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Entity.java</file>
         </group>
     </open-files>
 </project-private>
