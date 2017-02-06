@@ -40,5 +40,9 @@ public class Game {
         player.go(dir);
     }
     
+    public Tank getPlayer(int playerNumber){
+        return players.get(playerNumber);
+    }
+    
     
 }

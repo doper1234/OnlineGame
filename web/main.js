@@ -49,14 +49,15 @@ function Player(imageLocation){
 }
 
 var players = [];
-var player1;
-var player2;
-
+var player1 = document.getElementById("mario");
+var player2 = document.getElementById("player1");
+var player1x = 0;
+var player1y = 0;
 window.onload = function(){
-    player1 = new Player("/Online2D/images/mario.png");
-    player2 = new Player("/Online2D/images/player1.png");
-    players.push(player1);
-    players.push(player2);
+//    player1 = new Player("/Online2D/images/mario.png");
+//    player2 = new Player("/Online2D/images/player1.png");
+//    players.push(player1);
+//    players.push(player2);
     
     setInterval(function () {
 
@@ -65,10 +66,11 @@ window.onload = function(){
         console.log("draw?");
       //  context.drawImage(player1.Image, player1.X, player1.Y);
       //  context.drawImage(player2.Image, player2.X, player2.Y);
-        context.drawImage(new Image("/Online2D/images/mario.png"), 400, 100);
-        context.drawImage(new Image("/Online2D/images/player1.png"), 300, 150);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(player1, player1x, player1y);
+        context.drawImage(player2, 300, 150);
         console.log("draw???");
-    }, 3000);
+    }, 30);
 };
 
 
@@ -126,16 +128,16 @@ window.onload = function(){
                   
 		  
 		  // Draw the animation
-//		  that.context.drawImage(
-//		    that.image,
-//		    frameIndex * that.width / numberOfFrames,
-//		    0,
-//		    that.width / numberOfFrames,
-//		    that.height,
-//		    0,
-//		    0,
-//		    that.width / numberOfFrames,
-//		    that.height);
+		  that.context.drawImage(
+		    that.image,
+		    frameIndex * that.width / numberOfFrames,
+		    0,
+		    that.width / numberOfFrames,
+		    that.height,
+		    0,
+		    0,
+		    that.width / numberOfFrames,
+		    that.height);
 		};
 		
 		return that;

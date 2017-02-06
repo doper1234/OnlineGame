@@ -63,4 +63,12 @@ public class Entity {
         static final int DEFAULT_HEALTH = 1;
         
     }
+    
+    public int getLocX(){
+        return locX;
+    }
+    
+    public int getLocY(){
+        return locY;
+    }
 }

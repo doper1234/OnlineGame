@@ -13,15 +13,19 @@ window.onkeydown = function (event) {
     console.log(x);
     if (x === /*Keys.Up*/38) {  //UP Added else so only one can be pressed at once
         sendMessage(playerNumber + ", up");
+       // player1y--;
     }
     else if (x === /*Keys.Down*/ 40) {  //down
         sendMessage(playerNumber + ", down");
+        //player1y++;
     }
     else if (x === /*Keys.Left*/ 37) {  //LEFT
         sendMessage(playerNumber + ", left");
+       // player1x--;
     }
     else if (x === /*Keys.Right*/39) {  //right
         sendMessage(playerNumber + ", right");
+      //  player1x++;
     }
     if (x === Keys.Space) {  //SPACE
     }

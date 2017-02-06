@@ -4,6 +4,7 @@ import Game.Entity;
 import Game.Entity.Direction;
 import Game.Game;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.websocket.CloseReason;
@@ -78,9 +79,30 @@ public class EndPoint {
         } else if (message.equalsIgnoreCase("right")) {
             game.movePlayer(playerNo, Direction.RIGHT);
         }
-//broadcast(message);
+        
+        broadcast("move," + playerNo +","+ game.getPlayer(playerNo).getLocX() +"," + game.getPlayer(playerNo).getLocY());
     }
 
+    private void broadcast(String message) {
+        for(EndPoint client: clients){
+        try {
+                client.session.getBasicRemote().sendText(message);
+            } catch (IOException ex) {
+                clients.remove(this);
+                playerNumber--;
+                try {
+                    client.session.close();
+                } catch (IOException ex1) {
+                    System.err.println(ex1.getMessage());
+
+                }
+            } catch (IllegalStateException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        
+    }
+    
     private void broadcast(int playerNumberNotToSendTo, String message) {
         clients.stream().filter((client) -> (client.playerNumber != playerNumberNotToSendTo)).forEach((client) -> {
             try {
