@@ -49,10 +49,25 @@ function Player(imageLocation){
 }
 
 var players = [];
+var guy = document.getElementById("coin")//new Image("/Online2D/images/guymoving.png");
+var p1down = document.getElementById("p1down");
 var player1 = document.getElementById("mario");
 var player2 = document.getElementById("player1");
+
+var mariosprites = document.getElementById("mariosprites")//= new Image();
+//mariosprites.Imagesrc = "/Online2D/images/mariosprites.png";
 var player1x = 0;
 var player1y = 0;
+var bomb = document.getElementById("bomb");
+var explosionCenter = document.getElementById("explosionCenter");
+var explosionup = document.getElementById("explosionUp");
+var explosionupCenter = document.getElementById("explosionUpCenter");
+var imageWidth = 320;
+var frameNumber = 0;
+var bombFrame = 0;
+var explosionFrame = 0;
+var rowNumber = 0;
+var frameHeight = 32;
 window.onload = function(){
 //    player1 = new Player("/Online2D/images/mario.png");
 //    player2 = new Player("/Online2D/images/player1.png");
@@ -63,14 +78,35 @@ window.onload = function(){
 
         var canvas = document.getElementById("coinAnimation");
         var context = canvas.getContext("2d");
-        console.log("draw?");
+       // console.log("draw?");
       //  context.drawImage(player1.Image, player1.X, player1.Y);
       //  context.drawImage(player2.Image, player2.X, player2.Y);
+        explosionFrame++;
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(player1, player1x, player1y);
         context.drawImage(player2, 300, 150);
-        console.log("draw???");
-    }, 30);
+        context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
+        context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
+        context.drawImage(p1down, 24*frameNumber, 0, 22,22,player1x,player1y,44,44);
+        context.drawImage(bomb, 16*bombFrame++, 0, 16,16,50,50,32,32);
+        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,200,300,100,100);
+        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,200,100,100,100);
+        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,200,200,100,100);
+        //context.drawImage(explosiondown, 16*explosionFrame++, 0, 16,16,50,50,32,32);
+        //context.drawImage(explosionleft, 16*explosionFrame++, 0, 16,16,50,50,32,32);
+        //context.drawImage(explosionright, 16*explosionFrame++, 0, 16,16,50,50,32,32);
+        frameNumber++;
+        if(bombFrame >= 2)
+            bombFrame = 0;
+        if(frameNumber === 12){
+            frameNumber = 0;
+            bombFrame = 2;
+        }
+        if(explosionFrame === 3)
+            explosionFrame = 0;
+        //image, frameIndex * width / numberOfFrames, 0, width / numberOfFrames,height, 0, 0,width / numberOfFrames, height;
+        //console.log("draw???");
+    }, 300);
 };
 
 
@@ -128,16 +164,16 @@ window.onload = function(){
                   
 		  
 		  // Draw the animation
-		  that.context.drawImage(
-		    that.image,
-		    frameIndex * that.width / numberOfFrames,
-		    0,
-		    that.width / numberOfFrames,
-		    that.height,
-		    0,
-		    0,
-		    that.width / numberOfFrames,
-		    that.height);
+//		  that.context.drawImage(
+//		    that.image,
+//		    frameIndex * that.width / numberOfFrames,
+//		    0,
+//		    that.width / numberOfFrames,
+//		    that.height,
+//		    0,
+//		    0,
+//		    that.width / numberOfFrames,
+//		    that.height);
 		};
 		
 		return that;
@@ -145,12 +181,12 @@ window.onload = function(){
 	
 	// Get canvas
 	canvas = document.getElementById("coinAnimation");
-        canvas.width = 600;
-	canvas.height = 600;
+        canvas.width = 16*17*2;
+	canvas.height = 16*15*2;
         
         var context = canvas.getContext("2d");
-        //context.fillStyle = "#FFFFFF";
-        //context.fill();
+        context.fillStyle = "#FFF00F";
+        context.fill();
         
 	// Create sprite sheet
 	coinImage = new Image();	

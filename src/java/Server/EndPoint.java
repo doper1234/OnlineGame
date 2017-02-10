@@ -79,6 +79,8 @@ public class EndPoint {
         } else if (message.equalsIgnoreCase("right")) {
             game.movePlayer(playerNo, Direction.RIGHT);
         }
+        if(true)
+            ;
         
         broadcast("move," + playerNo +","+ game.getPlayer(playerNo).getLocX() +"," + game.getPlayer(playerNo).getLocY());
     }

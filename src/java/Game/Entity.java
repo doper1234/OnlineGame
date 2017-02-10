@@ -21,7 +21,7 @@ public class Entity {
         isAlive = true;
         isInvulnerable = true;
         this.health = health;
-        movementSpeed = 1;
+        movementSpeed = 5;
     }
     
     public void go(Direction direction){
