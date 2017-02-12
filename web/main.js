@@ -48,6 +48,13 @@ function Player(imageLocation){
     this.Image = new Image(imageLocation);        
 }
 
+var globalMultiplier = 3;
+var pixelLength = 16;
+
+var charSize = pixelLength* globalMultiplier;
+var gameWidth = 256*globalMultiplier;
+var gameHeight = 232*globalMultiplier;
+
 var players = [];
 var guy = document.getElementById("coin")//new Image("/Online2D/images/guymoving.png");
 var p1down = document.getElementById("p1down");
@@ -62,6 +69,7 @@ var bomb = document.getElementById("bomb");
 var explosionCenter = document.getElementById("explosionCenter");
 var explosionup = document.getElementById("explosionUp");
 var explosionupCenter = document.getElementById("explosionUpCenter");
+var stagescreen = document.getElementById("stagescreen");
 var imageWidth = 320;
 var frameNumber = 0;
 var bombFrame = 0;
@@ -85,16 +93,17 @@ MapGenerator();
       //  context.drawImage(player2.Image, player2.X, player2.Y);
         explosionFrame++;
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(player1, player1x, player1y);
-        context.drawImage(player2, 300, 150);
-        context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
-        context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
+        context.drawImage(stagescreen,0,0, gameWidth, gameHeight);
+     //   context.drawImage(player1, player1x, player1y);
+      //  context.drawImage(player2, 300, 150);
+      //  context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
+       // context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
         DrawMap();
-        context.drawImage(p1down, 24*frameNumber, 0, 22,22,player1x,player1y,32,32);
+        context.drawImage(p1down, 24*frameNumber, 0, 22,22,player1x,player1y, charSize, charSize);
         context.drawImage(bomb, 16*bombFrame++, 0, 16,16,64,0,32,32);
-        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,8*32,5*32,32,32);
-        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,8*32,3*32,32,32);
-        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,8*32,4*32,32,32);
+        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,8*32,5*32, charSize, charSize);
+        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,8*32,3*32, charSize, charSize);
+        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,8*32,4*32, charSize, charSize);
         
         //context.drawImage(explosiondown, 16*explosionFrame++, 0, 16,16,50,50,32,32);
         //context.drawImage(explosionleft, 16*explosionFrame++, 0, 16,16,50,50,32,32);
@@ -110,7 +119,7 @@ MapGenerator();
             explosionFrame = 0;
         //image, frameIndex * width / numberOfFrames, 0, width / numberOfFrames,height, 0, 0,width / numberOfFrames, height;
         //console.log("draw???");
-    }, 300);
+    }, 30);
 };
 
 
@@ -185,8 +194,8 @@ MapGenerator();
 	
 	// Get canvas
 	canvas = document.getElementById("coinAnimation");
-        canvas.width = 16*17*2;
-	canvas.height = 16*15*2;
+        canvas.width = gameWidth;
+	canvas.height = gameHeight;
         
         var context = canvas.getContext("2d");
         context.fillStyle = "#FFF00F";

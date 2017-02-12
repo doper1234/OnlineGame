@@ -44,12 +44,17 @@ function DrawMap() {
     var y = 0;
     for (i = 0; i < map.length; i++) {
         for (j = 0; j < map[i].length; j++) {
-            y = j*2;//i % 16;
+            if(j > 12)
+                continue;
+            y = j*globalMultiplier;//i % 16;
             //console.log(y);
             //if (i % 16 === 0) {
-                x = 16*2 *i;
+                x = charSize *i;
                 //y = 0;
             //}
+            x--;
+            x+= charSize*2.5;
+            y+= 4.5;
             if (map[i][j] === steel)
                 DrawSteel(y * 16, x);
             else if (map[i][j] === brick)
@@ -62,18 +67,18 @@ function DrawMap() {
 }
 
 function DrawGrass(y, x){
-    context.drawImage(map1Image, 0, 0*pixelSize, pixelSize, pixelSize, y, x, 32, 32);
+    context.drawImage(map1Image, 0, 0*pixelSize, pixelLength, pixelLength, y, x,  charSize, charSize);
     //context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,200,200,100,100);
 }
 
 function DrawSteel(y, x){
     //console.log("steel");
-    context.drawImage(map1Image, 3*pixelSize, 0, pixelSize, pixelSize, y, x, 32, 32);
+    context.drawImage(map1Image, 3*pixelSize, 0, pixelLength, pixelLength, y, x,  charSize, charSize);
 }
 
 function DrawBrick(y, x){
     console.log("brick");
-    context.drawImage(map1Image, 2*pixelSize, 0, pixelSize, pixelSize, y, x, 32, 32);
+    context.drawImage(map1Image, 2*pixelSize, 0, pixelLength, pixelLength, y, x,  charSize, charSize);
 }
 var grass = "O";
 var brick = "B";
