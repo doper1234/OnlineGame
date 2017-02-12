@@ -68,12 +68,14 @@ var bombFrame = 0;
 var explosionFrame = 0;
 var rowNumber = 0;
 var frameHeight = 32;
+var canvas = document.getElementById("coinAnimation");
+var context = canvas.getContext("2d");
 window.onload = function(){
 //    player1 = new Player("/Online2D/images/mario.png");
 //    player2 = new Player("/Online2D/images/player1.png");
 //    players.push(player1);
 //    players.push(player2);
-    
+MapGenerator();    
     setInterval(function () {
 
         var canvas = document.getElementById("coinAnimation");
@@ -87,11 +89,13 @@ window.onload = function(){
         context.drawImage(player2, 300, 150);
         context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
         context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
-        context.drawImage(p1down, 24*frameNumber, 0, 22,22,player1x,player1y,44,44);
-        context.drawImage(bomb, 16*bombFrame++, 0, 16,16,50,50,32,32);
-        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,200,300,100,100);
-        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,200,100,100,100);
-        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,200,200,100,100);
+        DrawMap();
+        context.drawImage(p1down, 24*frameNumber, 0, 22,22,player1x,player1y,32,32);
+        context.drawImage(bomb, 16*bombFrame++, 0, 16,16,64,0,32,32);
+        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,8*32,5*32,32,32);
+        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,8*32,3*32,32,32);
+        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,8*32,4*32,32,32);
+        
         //context.drawImage(explosiondown, 16*explosionFrame++, 0, 16,16,50,50,32,32);
         //context.drawImage(explosionleft, 16*explosionFrame++, 0, 16,16,50,50,32,32);
         //context.drawImage(explosionright, 16*explosionFrame++, 0, 16,16,50,50,32,32);

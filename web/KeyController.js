@@ -10,29 +10,22 @@
 
 window.onkeydown = function (event) {
     var x = event.keyCode;
+    var keys = new Keys();
     console.log(x);
-    if (x === /*Keys.Up*/38) {  //UP Added else so only one can be pressed at once
+    if (x === keys.Up)  //Added else so only one can be pressed at once
         sendMessage(playerNumber + ", up");
-       // player1y--;
-    }
-    else if (x === /*Keys.Down*/ 40) {  //down
+    else if (x === keys.Down)
         sendMessage(playerNumber + ", down");
-        //player1y++;
-    }
-    else if (x === /*Keys.Left*/ 37) {  //LEFT
+    else if (x === keys.Left)
         sendMessage(playerNumber + ", left");
-       // player1x--;
-    }
-    else if (x === /*Keys.Right*/39) {  //right
+    else if (x === keys.Right)
         sendMessage(playerNumber + ", right");
-      //  player1x++;
-    }
-    if (x === Keys.Space) {  //SPACE
-    }
-    if (x === Keys.Enter) {  //ENTER
-    }
-    if (x === Keys.A) {  //A, numbers go up alphabetically from A
-    }
+    if (x === keys.Space)
+        console.log("space");
+    if (x === keys.Enter)
+        console.log("enter");
+    if (x === keys.A)
+        console.log("a");
     
 };
 
