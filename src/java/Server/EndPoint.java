@@ -3,6 +3,7 @@ package Server;
 import Game.Entity;
 import Game.Entity.Direction;
 import Game.Game;
+import Game.Tank;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +21,7 @@ public class EndPoint {
      *
      * @author Chris
      */
-    Game game;
+    static Game game;
     int playerNumber = 0;
     public static List<EndPoint> clients = new CopyOnWriteArrayList<>();
     Session session;
@@ -28,10 +29,13 @@ public class EndPoint {
     @OnOpen
     public void onOpen(Session session, EndpointConfig eC) {
         this.session = session;
+        playerNumber = clients.size();
         if (clients.isEmpty()) {
             game = new Game(this);
         }
-        playerNumber = clients.size();
+        else
+            game.addPlayer(playerNumber);
+        
         try {
             if (playerNumber > 4) {
                 session.getBasicRemote().sendText("Server is full!");
@@ -81,8 +85,17 @@ public class EndPoint {
         }
         if(true)
             ;
-        
-        broadcast("move," + playerNo +","+ game.getPlayer(playerNo).getLocX() +"," + game.getPlayer(playerNo).getLocY());
+        Tank player = game.getPlayer(playerNo);
+//        String direction = "AN_UNKOWN_DIRECTION";
+//        if(player.getDirection() == Direction.RIGHT)
+//            direction = "RIGHT";
+//        else if(player.getDirection() == Direction.LEFT)
+//            direction = "LEFT";
+//        else if(player.getDirection() == Direction.UP)
+//            direction = "UP";
+//        else if(player.getDirection() == Direction.DOWN)
+//            direction = "DOWN";
+        broadcast("move," + playerNo +","+ player.getLocX() +"," + player.getLocY() + "," + player.getDirection().toString());
     }
 
     private void broadcast(String message) {

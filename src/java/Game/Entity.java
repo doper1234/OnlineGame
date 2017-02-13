@@ -71,4 +71,8 @@ public class Entity {
     public int getLocY(){
         return locY;
     }
+    
+    public Direction getDirection(){
+        return direction;
+    }
 }
