@@ -13,16 +13,18 @@ import java.util.*;
  *
  * @author Chris
  */
-public class Game {
+public final class Game {
     public static final int BOARD_WIDTH_MAX = 500, BOARD_HEIGHT_MAX = 500, BOARD_WIDTH_MIN = 0, BOARD_HEIGHT_MIN = 0;
     
-    private List<Tank> players;
+    private final List<Tank> players;
+    private final List<Bomb> bombs;
     private int numberOfPlayers;
     private final int [][] gameboard;
-    private EndPoint server;
+    private final EndPoint server;
     
     public Game(EndPoint endpoint){
         players = new ArrayList<>();
+        bombs = new ArrayList<>();
         this.server = endpoint;
         this.numberOfPlayers = EndPoint.clients.size() +1;
         gameboard = new int[20][20];
@@ -42,6 +44,16 @@ public class Game {
     
     public Tank getPlayer(int playerNumber){
         return players.get(playerNumber);
+    }
+
+    public Bomb addBomb(Tank player) {
+        if (player.canLayBomb()) {
+            player.layedBomb();
+            Bomb bomb = new Bomb(player.getLocX(), player.getLocY(), player.getBombRange());
+            bombs.add(bomb);
+            return bomb;
+        }
+        return null;
     }
     
     

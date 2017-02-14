@@ -7,6 +7,10 @@
 //onkeydown
 //onkeypress
 //onkeyup
+document.getElementById("rightButton").onclick = function(){ButtonClick("right");};
+document.getElementById("leftButton").onclick = function(){ButtonClick("left");};
+document.getElementById("upButton").onclick = function(){ButtonClick("up");};
+document.getElementById("downButton").onclick = function(){ButtonClick("down");};
 
 window.onkeydown = function (event) {
     var x = event.keyCode;
@@ -21,13 +25,18 @@ window.onkeydown = function (event) {
     else if (x === keys.Right)
         sendMessage(playerNumber + ", right");
     if (x === keys.Space)
-        console.log("space");
+        sendMessage(playerNumber + ", bomb");
     if (x === keys.Enter)
         console.log("enter");
     if (x === keys.A)
         console.log("a");
     
 };
+
+function ButtonClick(direction){
+    console.log(direction);
+    sendMessage(playerNumber + ", " + direction);
+}
 
 function Keys(){
     

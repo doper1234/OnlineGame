@@ -11,54 +11,58 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
- 
-(function() {
-	// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-	// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-	// requestAnimationFrame polyfill by Erik MÃ¶ller. fixes from Paul Irish and Tino Zijdel
-	// MIT license
+
+(function () {
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+    // requestAnimationFrame polyfill by Erik MÃ¶ller. fixes from Paul Irish and Tino Zijdel
+    // MIT license
 
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
-                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                || window[vendors[x] + 'CancelRequestAnimationFrame'];
     }
- 
+
     if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function(callback, element) {
+        window.requestAnimationFrame = function (callback, element) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
-              timeToCall);
+            var id = window.setTimeout(function () {
+                callback(currTime + timeToCall);
+            },
+                    timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
- 
+
     if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function(id) {
+        window.cancelAnimationFrame = function (id) {
             clearTimeout(id);
         };
 }());
 
-function Player(imageLocation){
+function Player(imageLocation) {
     this.X = 100;
     this.Y = 100;
-    this.Image = new Image(imageLocation);        
+    this.Image = new Image(imageLocation);
 }
 
 var globalMultiplier = 3;
 var pixelLength = 16;
 
-var charSize = pixelLength* globalMultiplier;
-var gameWidth = 256*globalMultiplier;
-var gameHeight = 232*globalMultiplier;
+var charSize = pixelLength * globalMultiplier;
+var gameWidth = 256 * globalMultiplier;
+var gameHeight = 232 * globalMultiplier;
 
 var players = [];
 var guy = document.getElementById("coin");//new Image("/Online2D/images/guymoving.png");
 var p1down = document.getElementById("p1down");
 var p2down = document.getElementById("p2down");
+var p3down = document.getElementById("p3down");
+var p4down = document.getElementById("p4down");
 var player1 = document.getElementById("mario");
 var player2 = document.getElementById("player1");
 
@@ -68,8 +72,16 @@ var player1x = 0;
 var player1y = 0;
 var player2x = 50;
 var player2y = 50;
+var player3x = 150;
+var player3y = 150;
+var player4x = 250;
+var player4y = 250;
 //var player1Direction = "LEFT";
-var bomb = document.getElementById("bomb");
+function Bomb(x,y){
+    this.x = x;
+    this.y = y;
+}
+var bombImage = document.getElementById("bomb");
 var explosionCenter = document.getElementById("explosionCenter");
 var explosionup = document.getElementById("explosionUp");
 var explosionupCenter = document.getElementById("explosionUpCenter");
@@ -82,112 +94,148 @@ var rowNumber = 0;
 var frameHeight = 32;
 var canvas = document.getElementById("coinAnimation");
 var context = canvas.getContext("2d");
-window.onload = function(){
+window.onload = function () {
 //    player1 = new Player("/Online2D/images/mario.png");
 //    player2 = new Player("/Online2D/images/player1.png");
 //    players.push(player1);
 //    players.push(player2);
-MapGenerator();    
+    MapGenerator();
     setInterval(function () {
 
         var canvas = document.getElementById("coinAnimation");
         var context = canvas.getContext("2d");
-       // console.log("draw?");
-      //  context.drawImage(player1.Image, player1.X, player1.Y);
-      //  context.drawImage(player2.Image, player2.X, player2.Y);
+        // console.log("draw?");
+        //  context.drawImage(player1.Image, player1.X, player1.Y);
+        //  context.drawImage(player2.Image, player2.X, player2.Y);
         explosionFrame++;
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(stagescreen,0,0, gameWidth, gameHeight);
-     //   context.drawImage(player1, player1x, player1y);
-      //  context.drawImage(player2, 300, 150);
-      //  context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
-       // context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
+        context.drawImage(stagescreen, 0, 0, gameWidth, gameHeight);
+        //   context.drawImage(player1, player1x, player1y);
+        //  context.drawImage(player2, 300, 150);
+        //  context.drawImage(guy, imageWidth*frameNumber, rowNumber*frameHeight, 0,0);
+        // context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
         DrawMap();
+        drawBombs();
         DrawPlayer1();
         DrawPlayer2();
-        context.drawImage(bomb, 16*bombFrame++, 0, 16,16,64,0,32,32);
-        context.drawImage(explosionCenter, 16*(explosionFrame), 0, 16,16,8*32,5*32, charSize, charSize);
-        context.drawImage(explosionup, 16*explosionFrame, 0, 16,16,8*32,3*32, charSize, charSize);
-        context.drawImage(explosionupCenter, 16*explosionFrame, 0, 16,16,8*32,4*32, charSize, charSize);
-        
+        DrawPlayer3();
+        DrawPlayer4();
+        //context.drawImage(bomb, 16 * bombFrame++, 0, 16, 16, 64, 0, 32, 32);
+        context.drawImage(explosionCenter, 16 * (explosionFrame), 0, 16, 16, 8 * 32, 5 * 32, charSize, charSize);
+        context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, 8 * 32, 3 * 32, charSize, charSize);
+        context.drawImage(explosionupCenter, 16 * explosionFrame, 0, 16, 16, 8 * 32, 4 * 32, charSize, charSize);
+
         //context.drawImage(explosiondown, 16*explosionFrame++, 0, 16,16,50,50,32,32);
         //context.drawImage(explosionleft, 16*explosionFrame++, 0, 16,16,50,50,32,32);
         //context.drawImage(explosionright, 16*explosionFrame++, 0, 16,16,50,50,32,32);
+        bombFrame++,
         frameNumber++;
-        if(bombFrame >= 2)
+        if (bombFrame >= 2)
             bombFrame = 0;
-        if(frameNumber === 2){
+        if (frameNumber === 2) {
             frameNumber = 0;
             bombFrame = 2;
         }
-        if(explosionFrame === 3)
+        if (explosionFrame === 3)
             explosionFrame = 0;
         //image, frameIndex * width / numberOfFrames, 0, width / numberOfFrames,height, 0, 0,width / numberOfFrames, height;
         //console.log("draw???");
     }, 30);
 };
 
-function DrawPlayer1(){
-    if(player1Direction === "LEFT")
-            context.drawImage(p1down, 24*(frameNumber + 6), 0, 22,22,player1x,player1y, charSize, charSize);
-        else if(player1Direction === "RIGHT")
-            context.drawImage(p1down, 24*(frameNumber + 3), 0, 22,22,player1x,player1y, charSize, charSize);
-        else if(player1Direction === "UP")
-            context.drawImage(p1down, 24*(frameNumber + 9), 0, 22,22,player1x,player1y, charSize, charSize);
-        else if(player1Direction === "DOWN")
-            context.drawImage(p1down, 24*(frameNumber + 0), 0, 22,22,player1x,player1y, charSize, charSize);
-        //console.log(player1Direction + " " + player1Direction.length);
+
+function drawBombs(){
+    bombs.forEach(function(bomb) {
+        context.drawImage(bombImage, 16 * bombFrame, 0, 16, 16, bomb.x, bomb.y, 32, 32);
+        console.log(bomb);
+    });
 }
 
-function DrawPlayer2(){
-    if(player2Direction === "LEFT")
-            context.drawImage(p2down, 24*(frameNumber + 6), 0, 22,22,player2x,player2y, charSize, charSize);
-        else if(player2Direction === "RIGHT")
-            context.drawImage(p2down, 24*(frameNumber + 3), 0, 22,22,player2x,player2y, charSize, charSize);
-        else if(player2Direction === "UP")
-            context.drawImage(p2down, 24*(frameNumber + 9), 0, 22,22,player2x,player2y, charSize, charSize);
-        else if(player2Direction === "DOWN")
-            context.drawImage(p2down, 24*(frameNumber + 0), 0, 22,22,player2x,player2y, charSize, charSize);
-        //console.log(player1Direction + " " + player1Direction.length);
+function DrawPlayer1() {
+    if (player1Direction === "LEFT")
+        context.drawImage(p1down, 24 * (frameNumber + 6), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "RIGHT")
+        context.drawImage(p1down, 24 * (frameNumber + 3), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "UP")
+        context.drawImage(p1down, 24 * (frameNumber + 9), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "DOWN")
+        context.drawImage(p1down, 24 * (frameNumber + 0), 0, 22, 22, player1x, player1y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer2() {
+    if (player2Direction === "LEFT")
+        context.drawImage(p2down, 24 * (frameNumber + 6), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "RIGHT")
+        context.drawImage(p2down, 24 * (frameNumber + 3), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "UP")
+        context.drawImage(p2down, 24 * (frameNumber + 9), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "DOWN")
+        context.drawImage(p2down, 24 * (frameNumber + 0), 0, 22, 22, player2x, player2y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer3() {
+    if (player1Direction === "LEFT")
+        context.drawImage(p3down, 24 * (frameNumber + 6), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "RIGHT")
+        context.drawImage(p3down, 24 * (frameNumber + 3), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "UP")
+        context.drawImage(p3down, 24 * (frameNumber + 9), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "DOWN")
+        context.drawImage(p3down, 24 * (frameNumber + 0), 0, 22, 22, player3x, player3y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer4() {
+    if (player2Direction === "LEFT")
+        context.drawImage(p4down, 24 * (frameNumber + 6), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "RIGHT")
+        context.drawImage(p4down, 24 * (frameNumber + 3), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "UP")
+        context.drawImage(p4down, 24 * (frameNumber + 9), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "DOWN")
+        context.drawImage(p4down, 24 * (frameNumber + 0), 0, 22, 22, player4x, player4y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
 }
 
 (function () {
-			
-	var coin,
-		coinImage,
-		canvas;					
 
-	function gameLoop () {
-	
-	  window.requestAnimationFrame(gameLoop);
+    var coin,
+            coinImage,
+            canvas;
 
-	  coin.update();
-	  coin.render();
-	}
-	
-	function sprite (options) {
-	
-		var that = {},
-			frameIndex = 0,
-			tickCount = 0,
-			ticksPerFrame = options.ticksPerFrame || 0,
-			numberOfFrames = options.numberOfFrames || 1;
-		
-		that.context = options.context;
-		that.width = options.width;
-		that.height = options.height;
-		that.image = options.image;
-                
-		that.update = function () {
+    function gameLoop() {
+
+        window.requestAnimationFrame(gameLoop);
+
+        coin.update();
+        coin.render();
+    }
+
+    function sprite(options) {
+
+        var that = {},
+                frameIndex = 0,
+                tickCount = 0,
+                ticksPerFrame = options.ticksPerFrame || 0,
+                numberOfFrames = options.numberOfFrames || 1;
+
+        that.context = options.context;
+        that.width = options.width;
+        that.height = options.height;
+        that.image = options.image;
+
+        that.update = function () {
 
             tickCount += 1;
 
             if (tickCount > ticksPerFrame) {
 
-				tickCount = 0;
-				
+                tickCount = 0;
+
                 // If the current frame index is in range
-                if (frameIndex < numberOfFrames - 1) {	
+                if (frameIndex < numberOfFrames - 1) {
                     // Go to the next frame
                     frameIndex += 1;
                 } else {
@@ -195,14 +243,14 @@ function DrawPlayer2(){
                 }
             }
         };
-		
-		that.render = function () {
-		
-		  // Clear the canvas
-		  //that.context.clearRect(0, 0, that.width, that.height);
-                  
-		  
-		  // Draw the animation
+
+        that.render = function () {
+
+            // Clear the canvas
+            //that.context.clearRect(0, 0, that.width, that.height);
+
+
+            // Draw the animation
 //		  that.context.drawImage(
 //		    that.image,
 //		    frameIndex * that.width / numberOfFrames,
@@ -213,36 +261,36 @@ function DrawPlayer2(){
 //		    0,
 //		    that.width / numberOfFrames,
 //		    that.height);
-		};
-		
-		return that;
-	}
-	
-	// Get canvas
-	canvas = document.getElementById("coinAnimation");
-        canvas.width = gameWidth;
-	canvas.height = gameHeight;
-        
-        var context = canvas.getContext("2d");
-        context.fillStyle = "#FFF00F";
-        context.fill();
-        
-	// Create sprite sheet
-	coinImage = new Image();	
-	
-	// Create sprite
-	coin = sprite({
-		context: canvas.getContext("2d"),
-		width: 1000,
-		height: 100,
-		image: coinImage,
-		numberOfFrames: 10,
-		ticksPerFrame: 4
-	});
-	
-	// Load sprite sheet
-	coinImage.addEventListener("load", gameLoop);
-	coinImage.src = "/Online2D/images/coin-sprite-animation.png";
+        };
 
-} ());
+        return that;
+    }
+
+    // Get canvas
+    canvas = document.getElementById("coinAnimation");
+    canvas.width = gameWidth;
+    canvas.height = gameHeight;
+
+    var context = canvas.getContext("2d");
+    context.fillStyle = "#FFF00F";
+    context.fill();
+
+    // Create sprite sheet
+    coinImage = new Image();
+
+    // Create sprite
+    coin = sprite({
+        context: canvas.getContext("2d"),
+        width: 1000,
+        height: 100,
+        image: coinImage,
+        numberOfFrames: 10,
+        ticksPerFrame: 4
+    });
+
+    // Load sprite sheet
+    coinImage.addEventListener("load", gameLoop);
+    coinImage.src = "/Online2D/images/coin-sprite-animation.png";
+
+}());
 

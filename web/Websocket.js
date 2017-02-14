@@ -4,6 +4,9 @@ var playerNumber;
 var initialized = false;
 var player1Direction = "DOWN";
 var player2Direction = "DOWN";
+var player3Direction = "DOWN";
+var player4Direction = "DOWN";
+var bombs = [];
 function WebSocketTest()
 {
     if ("WebSocket" in window)
@@ -44,8 +47,25 @@ function WebSocketTest()
                     player2y = parseInt(message[3]);
                     player2Direction = message[4];
                 }
+                else if (parseInt(message[1]) === 2) {
+                    player3x = parseInt(message[2]);
+                    player3y = parseInt(message[3]);
+                    player3Direction = message[4];
+                }
+                else if (parseInt(message[1]) === 3) {
+                    player4x = parseInt(message[2]);
+                    player4y = parseInt(message[3]);
+                    player4Direction = message[4];
+                }
                 console.log(player1Direction + message[4]);
                 //players.push(player2);
+            }
+            else if(message[0] === "bomb"){
+                addBomb(parseInt(message[1]), parseInt(message[2]));
+//                alert(message);
+            }
+            else if(message[0] === "message"){
+                displayMessage("Player " + message[1] + " said: " + message[2]);
             }
         };
 
@@ -60,6 +80,14 @@ function WebSocketTest()
        // alert("WebSocket NOT supported by your Browser!");
     }
     
+}
+
+function displayMessage(message){
+    
+}
+
+function addBomb(x,y){
+    bombs.push(new Bomb(x,y));
 }
 
 this.sendMessage = function (message){

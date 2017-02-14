@@ -1,5 +1,6 @@
 package Server;
 
+import Game.Bomb;
 import Game.Entity;
 import Game.Entity.Direction;
 import Game.Game;
@@ -65,6 +66,7 @@ public class EndPoint {
 
     @OnMessage
     public void onMessage(String message) {
+        Bomb bomb = null;
         System.out.println(message);
         String[] input = message.split(", ");
         message = input[1];
@@ -82,20 +84,16 @@ public class EndPoint {
             game.movePlayer(playerNo, Direction.LEFT);
         } else if (message.equalsIgnoreCase("right")) {
             game.movePlayer(playerNo, Direction.RIGHT);
-        }
-        if(true)
-            ;
+        } 
+        
         Tank player = game.getPlayer(playerNo);
-//        String direction = "AN_UNKOWN_DIRECTION";
-//        if(player.getDirection() == Direction.RIGHT)
-//            direction = "RIGHT";
-//        else if(player.getDirection() == Direction.LEFT)
-//            direction = "LEFT";
-//        else if(player.getDirection() == Direction.UP)
-//            direction = "UP";
-//        else if(player.getDirection() == Direction.DOWN)
-//            direction = "DOWN";
-        broadcast("move," + playerNo +","+ player.getLocX() +"," + player.getLocY() + "," + player.getDirection().toString());
+        if (message.equalsIgnoreCase("bomb")){
+            bomb = game.addBomb(player);
+        }
+        if(bomb != null)
+            broadcast("bomb,"+ bomb.getLocX() +"," + bomb.getLocY());
+        else
+            broadcast("move," + playerNo +","+ player.getLocX() +"," + player.getLocY() + "," + player.getDirection().toString());
     }
 
     private void broadcast(String message) {
