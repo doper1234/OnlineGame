@@ -8,7 +8,12 @@ package Game;
 import Constants.Constants;
 import Game.BaseEntity.Direction;
 import Server.EndPoint;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,14 +21,24 @@ import java.util.*;
  */
 public final class Game {
 
-    public static final int BOARD_WIDTH_MAX = 500, BOARD_HEIGHT_MAX = 500, BOARD_WIDTH_MIN = 0, BOARD_HEIGHT_MIN = 0;
+    public static final int BOARD_TILES_X = 13;
+    public static final int BOARD_TILES_Y = 11;
+    public static final int GLOBAL_MULTIPLIER = 3;
+    public static final int PIXEL_SIZE = 16 * GLOBAL_MULTIPLIER;
+    
+    public static final int BOARD_WIDTH_MAX = BOARD_TILES_X * PIXEL_SIZE;
+    public static final int BOARD_HEIGHT_MAX = BOARD_TILES_Y * PIXEL_SIZE;
+    public static final int BOARD_WIDTH_MIN = 0;
+    public static final int BOARD_HEIGHT_MIN = 0;
 
     private final List<Tank> players;
     private final List<Bomb> bombs;
+    private int mapNumber = 1;
     private int numberOfPlayers;
     private final int[][] gameboard;
     private final EndPoint server;
     private Timer gameTimer;
+    
 
     public Game(EndPoint endpoint) {
         players = new ArrayList<>();
@@ -31,10 +46,10 @@ public final class Game {
 
         this.server = endpoint;
         this.numberOfPlayers = EndPoint.clients.size() + 1;
-        gameboard = new int[20][20];
+        gameboard = new int[BOARD_TILES_X][BOARD_TILES_Y];
+        initializeGameBoard(mapNumber);
         startTimer();
         addPlayer(endpoint.getPlayerNumber());
-
     }
 
     public void addPlayer(int playerNumber) {
@@ -73,6 +88,25 @@ public final class Game {
             }
         }
     }
+    
+    private void initializeGameBoard(int mapNumber) {
+       try {
+            int x = 0;
+            int y = 0;
+            for (String line : Files.readAllLines(Paths.get("\\OnlineGame\\web\\maps\\map"+mapNumber+".txt"))) {
+                for (String part : line.split("")) {
+                    int block = Integer.parseInt(part);
+                    gameboard[x][y] = block;
+                    y++;
+                }
+                x++;
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     private void startTimer() {
         gameTimer = new Timer();
@@ -83,4 +117,5 @@ public final class Game {
             }
         }, 2 * Constants.MINUTE);
     }
+
 }

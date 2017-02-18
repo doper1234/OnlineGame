@@ -52,6 +52,8 @@ function Player(imageLocation) {
 
 var globalMultiplier = 3;
 var pixelLength = 16;
+var tilesX = 13;
+var tilesY = 11;
 
 var charSize = pixelLength * globalMultiplier;
 var gameWidth = 256 * globalMultiplier;
