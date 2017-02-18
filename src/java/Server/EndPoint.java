@@ -1,8 +1,8 @@
 package Server;
 
+import Game.BaseEntity.Direction;
 import Game.Bomb;
-import Game.Entity;
-import Game.Entity.Direction;
+import Game.PlayerEntity;
 import Game.Game;
 import Game.Tank;
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class EndPoint {
             bomb = game.addBomb(player);
         }
         if(bomb != null)
-            broadcast("bomb,"+ bomb.getLocX() +"," + bomb.getLocY());
+            broadcast("bomb," + bomb.getBombId() + "," + bomb.getLocX() +"," + bomb.getLocY());
         else
             broadcast("move," + playerNo +","+ player.getLocX() +"," + player.getLocY() + "," + player.getDirection().toString());
     }
@@ -137,5 +137,9 @@ public class EndPoint {
 
     public int getPlayerNumber() {
         return playerNumber;
+    }
+
+    public void bombExploded(int bombId) {
+        
     }
 }

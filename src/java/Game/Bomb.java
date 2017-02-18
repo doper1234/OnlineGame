@@ -5,6 +5,8 @@
  */
 package Game;
 
+import Constants.Constants;
+
 /**
  *
  * @author Chris
@@ -12,14 +14,32 @@ package Game;
 public class Bomb extends Projectile {
     
     private final int range;
+    private final int bombId;
+    private int ticks;
+    private final int EXPLODING_TICK = 10;
     
     public Bomb(int x, int y, int r) {
         super(x, y);
         this.range = r;
+        bombId = Constants.getBombId();
     }
     
     public int getRange(){
         return range;
     }
     
+    public void tick(){
+        ticks++;
+        if(ticks == EXPLODING_TICK){
+            explode();
+        }
+    }
+    
+    public void explode(){
+        this.isAlive = false;
+    }
+    
+    public int getBombId(){
+        return bombId;
+    }
 }

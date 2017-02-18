@@ -9,7 +9,7 @@ package Game;
  *
  * @author Chris
  */
-public class Tank extends Entity{
+public class Tank extends PlayerEntity{
     
     public Type type;
     
@@ -30,7 +30,7 @@ public class Tank extends Entity{
     }
     
     public Tank(int x, int y, Direction direc, Type type) {
-        super(x, y, direc, Entity.Health.DEFAULT_HEALTH);
+        super(x, y, direc, PlayerEntity.Health.DEFAULT_HEALTH);
         this.type = type;
         bombRange = 1;
         bombCapacity = 10;
