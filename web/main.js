@@ -70,8 +70,10 @@ var player2 = document.getElementById("player1");
 
 var mariosprites = document.getElementById("mariosprites");//= new Image();
 //mariosprites.Imagesrc = "/Online2D/images/mariosprites.png";
-var player1x = 0;
-var player1y = 0;
+var boardStartX = (16*2)*globalMultiplier;
+var boardStartY = (16*3)* globalMultiplier;
+var player1x = boardStartX;
+var player1y = boardStartX;
 var player2x = 50;
 var player2y = 50;
 var player3x = 150;
@@ -79,7 +81,8 @@ var player3y = 150;
 var player4x = 250;
 var player4y = 250;
 //var player1Direction = "LEFT";
-function Bomb(x,y){
+function Bomb(bombId,x,y){
+    this.id = bombId;
     this.x = x;
     this.y = y;
 }
@@ -118,10 +121,10 @@ window.onload = function () {
         // context.drawImage(mariosprites, 12*frameNumber, 10, 20,20,0,0,100,100);
         DrawMap();
         drawBombs();
-        DrawPlayer1();
-        DrawPlayer2();
-        DrawPlayer3();
-        DrawPlayer4();
+        DrawPlayer(1);
+        DrawPlayer(2);
+        DrawPlayer(3);
+        DrawPlayer(4);
         //context.drawImage(bomb, 16 * bombFrame++, 0, 16, 16, 64, 0, 32, 32);
         context.drawImage(explosionCenter, 16 * (explosionFrame), 0, 16, 16, 8 * 32, 5 * 32, charSize, charSize);
         context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, 8 * 32, 3 * 32, charSize, charSize);
@@ -153,51 +156,42 @@ function drawBombs(){
     });
 }
 
-function DrawPlayer1() {
-    if (player1Direction === "LEFT")
-        context.drawImage(p1down, 24 * (frameNumber + 6), 0, 22, 22, player1x, player1y, charSize, charSize);
-    else if (player1Direction === "RIGHT")
-        context.drawImage(p1down, 24 * (frameNumber + 3), 0, 22, 22, player1x, player1y, charSize, charSize);
-    else if (player1Direction === "UP")
-        context.drawImage(p1down, 24 * (frameNumber + 9), 0, 22, 22, player1x, player1y, charSize, charSize);
-    else if (player1Direction === "DOWN")
-        context.drawImage(p1down, 24 * (frameNumber + 0), 0, 22, 22, player1x, player1y, charSize, charSize);
-    //console.log(player1Direction + " " + player1Direction.length);
-}
-
-function DrawPlayer2() {
-    if (player2Direction === "LEFT")
-        context.drawImage(p2down, 24 * (frameNumber + 6), 0, 22, 22, player2x, player2y, charSize, charSize);
-    else if (player2Direction === "RIGHT")
-        context.drawImage(p2down, 24 * (frameNumber + 3), 0, 22, 22, player2x, player2y, charSize, charSize);
-    else if (player2Direction === "UP")
-        context.drawImage(p2down, 24 * (frameNumber + 9), 0, 22, 22, player2x, player2y, charSize, charSize);
-    else if (player2Direction === "DOWN")
-        context.drawImage(p2down, 24 * (frameNumber + 0), 0, 22, 22, player2x, player2y, charSize, charSize);
-    //console.log(player1Direction + " " + player1Direction.length);
-}
-
-function DrawPlayer3() {
-    if (player1Direction === "LEFT")
-        context.drawImage(p3down, 24 * (frameNumber + 6), 0, 22, 22, player3x, player3y, charSize, charSize);
-    else if (player3Direction === "RIGHT")
-        context.drawImage(p3down, 24 * (frameNumber + 3), 0, 22, 22, player3x, player3y, charSize, charSize);
-    else if (player3Direction === "UP")
-        context.drawImage(p3down, 24 * (frameNumber + 9), 0, 22, 22, player3x, player3y, charSize, charSize);
-    else if (player3Direction === "DOWN")
-        context.drawImage(p3down, 24 * (frameNumber + 0), 0, 22, 22, player3x, player3y, charSize, charSize);
-    //console.log(player1Direction + " " + player1Direction.length);
-}
-
-function DrawPlayer4() {
-    if (player2Direction === "LEFT")
-        context.drawImage(p4down, 24 * (frameNumber + 6), 0, 22, 22, player4x, player4y, charSize, charSize);
-    else if (player4Direction === "RIGHT")
-        context.drawImage(p4down, 24 * (frameNumber + 3), 0, 22, 22, player4x, player4y, charSize, charSize);
-    else if (player4Direction === "UP")
-        context.drawImage(p4down, 24 * (frameNumber + 9), 0, 22, 22, player4x, player4y, charSize, charSize);
-    else if (player4Direction === "DOWN")
-        context.drawImage(p4down, 24 * (frameNumber + 0), 0, 22, 22, player4x, player4y, charSize, charSize);
+function DrawPlayer(playerNo) {
+    var direction, image, x,y;
+    if(playerNo === 1){
+        direction = player1Direction;
+        image = p1down;
+        x = player1x;
+        y = player1y;
+    }
+    else if(playerNo === 2){
+        direction = player2Direction;
+        image = p2down;
+        x = player2x;
+        y = player2y;
+    }
+    else if(playerNo === 3){
+        direction = player3Direction;
+        image = p3down;
+        x = player3x;
+        y = player3y;
+    }
+    
+    else if(playerNo === 4){
+        direction = player4Direction;
+        image = p4down;
+        x = player4x;
+        y = player4y;
+    }
+        
+    if (direction === "LEFT")
+        context.drawImage(image, 24 * (frameNumber + 6), 0, 22, 22, x, y, charSize, charSize);
+    else if (direction === "RIGHT")
+        context.drawImage(image, 24 * (frameNumber + 3), 0, 22, 22, x, y, charSize, charSize);
+    else if (direction === "UP")
+        context.drawImage(image, 24 * (frameNumber + 9), 0, 22, 22, x, y, charSize, charSize);
+    else if (direction === "DOWN")
+        context.drawImage(image, 24 * (frameNumber + 0), 0, 22, 22, x, y, charSize, charSize);
     //console.log(player1Direction + " " + player1Direction.length);
 }
 
@@ -295,4 +289,53 @@ function DrawPlayer4() {
     coinImage.src = "/Online2D/images/coin-sprite-animation.png";
 
 }());
+
+
+function DrawPlayer1() {
+    if (player1Direction === "LEFT")
+        context.drawImage(p1down, 24 * (frameNumber + 6), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "RIGHT")
+        context.drawImage(p1down, 24 * (frameNumber + 3), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "UP")
+        context.drawImage(p1down, 24 * (frameNumber + 9), 0, 22, 22, player1x, player1y, charSize, charSize);
+    else if (player1Direction === "DOWN")
+        context.drawImage(p1down, 24 * (frameNumber + 0), 0, 22, 22, player1x, player1y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer2() {
+    if (player2Direction === "LEFT")
+        context.drawImage(p2down, 24 * (frameNumber + 6), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "RIGHT")
+        context.drawImage(p2down, 24 * (frameNumber + 3), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "UP")
+        context.drawImage(p2down, 24 * (frameNumber + 9), 0, 22, 22, player2x, player2y, charSize, charSize);
+    else if (player2Direction === "DOWN")
+        context.drawImage(p2down, 24 * (frameNumber + 0), 0, 22, 22, player2x, player2y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer3() {
+    if (player1Direction === "LEFT")
+        context.drawImage(p3down, 24 * (frameNumber + 6), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "RIGHT")
+        context.drawImage(p3down, 24 * (frameNumber + 3), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "UP")
+        context.drawImage(p3down, 24 * (frameNumber + 9), 0, 22, 22, player3x, player3y, charSize, charSize);
+    else if (player3Direction === "DOWN")
+        context.drawImage(p3down, 24 * (frameNumber + 0), 0, 22, 22, player3x, player3y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
+
+function DrawPlayer4() {
+    if (player2Direction === "LEFT")
+        context.drawImage(p4down, 24 * (frameNumber + 6), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "RIGHT")
+        context.drawImage(p4down, 24 * (frameNumber + 3), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "UP")
+        context.drawImage(p4down, 24 * (frameNumber + 9), 0, 22, 22, player4x, player4y, charSize, charSize);
+    else if (player4Direction === "DOWN")
+        context.drawImage(p4down, 24 * (frameNumber + 0), 0, 22, 22, player4x, player4y, charSize, charSize);
+    //console.log(player1Direction + " " + player1Direction.length);
+}
 

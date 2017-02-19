@@ -14,7 +14,7 @@ function WebSocketTest()
        // alert("WebSocket is supported by your Browser!");
 
         // Let us open a web socket
-        ws = new WebSocket("ws://192.168.1.102:8080/Online2D/game");
+        ws = new WebSocket("ws://192.168.1.104:8080/Online2D/game");
         ws.onopen = function ()
         {
             // Web Socket is connected, send data using send()

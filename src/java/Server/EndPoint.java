@@ -100,7 +100,8 @@ public class EndPoint {
         for(EndPoint client: clients){
         try {
                 client.session.getBasicRemote().sendText(message);
-            } catch (IOException ex) {
+            } 
+        catch (IOException ex) {
                 clients.remove(this);
                 playerNumber--;
                 try {
