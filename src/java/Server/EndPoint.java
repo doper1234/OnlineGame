@@ -140,7 +140,7 @@ public class EndPoint {
         return playerNumber;
     }
 
-    public void bombExploded(int bombId) {
-        
+    public void bombExploded(int bombId, String bombExplosionArea) {
+        broadcast("bombexploded," + bombId + "," + bombExplosionArea);
     }
 }

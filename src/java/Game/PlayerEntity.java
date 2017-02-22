@@ -31,7 +31,7 @@ public class PlayerEntity extends BaseEntity{
                     locX-= movementSpeed;
                 break;
             case RIGHT:
-                if(locX + movementSpeed <= Game.BOARD_WIDTH_MAX)
+                if(locX + movementSpeed <= Game.BOARD_WIDTH_MAX - 16*3)
                     locX+= movementSpeed;
                 break;
             case UP:
@@ -39,7 +39,7 @@ public class PlayerEntity extends BaseEntity{
                     locY-= movementSpeed;
                 break;
             case DOWN:
-                if(locY + movementSpeed <= Game.BOARD_HEIGHT_MAX)
+                if(locY + movementSpeed <= Game.BOARD_HEIGHT_MAX- 16*3)
                     locY+= movementSpeed;
                 break;
             default:

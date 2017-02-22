@@ -55,6 +55,10 @@ public class Tank extends PlayerEntity{
         currentBombAmount++;
     }
     
+    public void bombExploded() {
+        currentBombAmount--;
+    }
+    
     public void increaseBombCapacity(){
         //if(bombCapacity < MAX_BOMB_CAPACITY
         bombCapacity++;

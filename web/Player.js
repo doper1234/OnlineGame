@@ -6,7 +6,8 @@
 
 function Player(spriteImage){
     charSize = 3*16; //TODO make constant
-    
+    this.x = 0;
+    this.y = 0;
     this.direction = "DOWN";
     this.image = spriteImage;
     this.update = function(context, frameNumber, x,y){

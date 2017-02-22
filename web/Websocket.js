@@ -1,12 +1,7 @@
 window.onload = WebSocketTest();
 var ws;
 var playerNumber;
-var initialized = false;
-var player1Direction = "DOWN";
-var player2Direction = "DOWN";
-var player3Direction = "DOWN";
-var player4Direction = "DOWN";
-var bombs = [];
+
 function WebSocketTest()
 {
     if ("WebSocket" in window)
@@ -14,7 +9,7 @@ function WebSocketTest()
        // alert("WebSocket is supported by your Browser!");
 
         // Let us open a web socket
-        ws = new WebSocket("ws://192.168.1.104:8080/Online2D/game");
+        ws = new WebSocket("ws://192.168.1.102:8080/Online2D/game");
         ws.onopen = function ()
         {
             // Web Socket is connected, send data using send()
@@ -61,9 +56,14 @@ function WebSocketTest()
                 //players.push(player2);
             }
             else if(message[0] === "bomb"){
-                addBomb(parseInt(message[1]), parseInt(message[2]));
+                addBomb(parseInt(message[1]), parseInt(message[2]), parseInt(message[3]));
 //                alert(message);
             }
+            else if(message[0] === "bombexploded"){
+                explodeBomb(parseInt(message[1]));
+                alert(message);
+            }
+            
             else if(message[0] === "message"){
                 displayMessage("Player " + message[1] + " said: " + message[2]);
             }
@@ -86,8 +86,18 @@ function displayMessage(message){
     
 }
 
-function addBomb(x,y){
-    bombs.push(new Bomb(x,y));
+function explodeBomb(id) {
+    for (var i = 0; i < bombs.length; i++) {
+        if (bombs[i].id === id) {
+            bombs[i].exploded = true;
+            break;
+        }
+    }
+}
+
+function addBomb(id, x,y){
+    alert(x + ", " + y);
+    bombs.push(new Bomb(id, x + boardOffSetX, y + boardOffSetY));
 }
 
 this.sendMessage = function (message){

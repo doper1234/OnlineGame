@@ -69,9 +69,11 @@ public final class Game {
     public Bomb addBomb(Tank player) {
         if (player.canLayBomb()) {
             player.layedBomb();
-            int x = player.getLocX()/20 * 16;
-            int y = player.getLocY()/20 * 16;
-            Bomb bomb = new Bomb(x, y, player.getBombRange());
+            int locX = (player.getLocX()/13);
+            int locY = (player.getLocY()/11);
+            int x = locX * (16 * 3);
+            int y = locY * (16 * 3);
+            Bomb bomb = new Bomb(x, y, player.getBombRange(), player);
             bombs.add(bomb);
             return bomb;
         }
@@ -83,10 +85,44 @@ public final class Game {
             Bomb b = it.next();
             b.tick();
             if (!b.isAlive()) {
-                server.bombExploded(b.getBombId());
+                server.bombExploded(b.getBombId(), getBombExplosionArea(b));
                 it.remove();
             }
         }
+    }
+    
+    private String getBombExplosionArea(Bomb b){
+        int x = b.getLocX()/(16*3);
+        int y = b.getLocY()/(16*3);
+        int range = b.getRange();
+        int left,right,up,down;
+        left = right = up = down = 0;
+        
+        for (int i = x; i < gameboard.length; i++) {
+            if(gameboard[i][y] != 0)
+                break;
+            right++;
+        }
+        
+        for (int i = x; i > 0; i--) {
+            if(gameboard[i][y] != 0)
+                break;
+            left++;
+        }
+        
+        for (int i = y; i < gameboard.length; i++) {
+            if(gameboard[x][i] != 0)
+                break;
+            down++;
+        }
+        
+        for (int i = y; i > 0; i--) {
+            if(gameboard[x][i] != 0)
+                break;
+            up++;
+        }
+        
+        return String.format(",%1$d,%2$d,%3$d,%4$d", left,right,up,down);
     }
     
     private void initializeGameBoard(int mapNumber) {
@@ -115,7 +151,8 @@ public final class Game {
             public void run() {
                 updateBombs();
             }
-        }, 2 * Constants.MINUTE);
+        },0, Constants.SECOND * 8);
+        
     }
 
 }

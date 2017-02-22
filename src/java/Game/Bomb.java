@@ -15,13 +15,15 @@ public class Bomb extends Projectile {
     
     private final int range;
     private final int bombId;
+    private final Tank player;
     private int ticks;
     private final int EXPLODING_TICK = 10;
     
-    public Bomb(int x, int y, int r) {
+    public Bomb(int x, int y, int r, Tank player) {
         super(x, y);
         this.range = r;
         bombId = Constants.getBombId();
+        this.player = player;
     }
     
     public int getRange(){
@@ -36,6 +38,7 @@ public class Bomb extends Projectile {
     }
     
     public void explode(){
+        player.increaseBombCapacity();
         this.isAlive = false;
     }
     

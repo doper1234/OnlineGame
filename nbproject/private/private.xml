@@ -3,15 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Constants/Constants.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/Bomb.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/Projectile.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Server/EndPoint.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/BaseEntity.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/Tank.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/PlayerEntity.java</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/web/main.js</file>
-            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2DGame/OnlineGame/src/java/Game/Game.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Player.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Projectile.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/index.html</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/main.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Server/EndPoint.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/GameController.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/PlayerEntity.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Websocket.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/KeyController.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Game.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/MapGenerator.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/src/java/Game/Tank.java</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Entity.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/constants.js</file>
+            <file>file:/C:/Users/Chris/Documents/NetBeansProjects/Online2D/web/Enemy.js</file>
         </group>
     </open-files>
 </project-private>
