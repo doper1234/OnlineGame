@@ -9,7 +9,7 @@ function WebSocketTest()
        // alert("WebSocket is supported by your Browser!");
 
         // Let us open a web socket
-        ws = new WebSocket("ws://192.168.1.102:8080/Online2D/game");
+        ws = new WebSocket("ws://192.168.1.103:8080/Online2D/game");
         ws.onopen = function ()
         {
             // Web Socket is connected, send data using send()
@@ -60,8 +60,8 @@ function WebSocketTest()
 //                alert(message);
             }
             else if(message[0] === "bombexploded"){
-                explodeBomb(parseInt(message[1]));
-                alert(message);
+                explodeBomb(parseInt(message[1]), parseInt(message[2]),parseInt(message[3]),parseInt(message[4]),parseInt(message[5]));
+               // alert(message);
             }
             
             else if(message[0] === "message"){
@@ -86,9 +86,13 @@ function displayMessage(message){
     
 }
 
-function explodeBomb(id) {
+function explodeBomb(id, left, right,up, down) {
     for (var i = 0; i < bombs.length; i++) {
         if (bombs[i].id === id) {
+            bombs[i].left = left;
+            bombs[i].right = right;
+            bombs[i].up = up;
+            bombs[i].down = down;
             bombs[i].exploded = true;
             break;
         }
@@ -96,7 +100,7 @@ function explodeBomb(id) {
 }
 
 function addBomb(id, x,y){
-    alert(x + ", " + y);
+    //alert(x + ", " + y);
     bombs.push(new Bomb(id, x + boardOffSetX, y + boardOffSetY));
 }
 

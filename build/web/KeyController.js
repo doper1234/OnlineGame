@@ -11,6 +11,7 @@ document.getElementById("rightButton").onclick = function(){ButtonClick("right")
 document.getElementById("leftButton").onclick = function(){ButtonClick("left");};
 document.getElementById("upButton").onclick = function(){ButtonClick("up");};
 document.getElementById("downButton").onclick = function(){ButtonClick("down");};
+document.getElementById("layBombButton").onclick = function(){ButtonClick("bomb");};
 
 window.onkeydown = function (event) {
     var x = event.keyCode;

@@ -16,7 +16,8 @@ public class Tank extends PlayerEntity{
     private int bombRange;
     private int bombCapacity;
     private int currentBombAmount;
-
+    private int playerNumber;
+    
     public enum Type{
         PLAYER, ENEMY
     }
@@ -29,14 +30,19 @@ public class Tank extends PlayerEntity{
         ONE, TWO, THREE, FOUR
     }
     
-    public Tank(int x, int y, Direction direc, Type type) {
+    public Tank(int x, int y, Direction direc, Type type, int playerNo) {
         super(x, y, direc, PlayerEntity.Health.DEFAULT_HEALTH);
         this.type = type;
-        bombRange = 1;
+        bombRange = 2;
         bombCapacity = 10;
         currentBombAmount = 0;
+        playerNumber = playerNo;
     }
     
+    public int getPlayerNumber(){
+        return playerNumber;
+    }
+
     public int getBombRange(){
         return bombRange;
     }

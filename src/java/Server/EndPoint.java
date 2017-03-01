@@ -62,6 +62,8 @@ public class EndPoint {
     public void onClose(Session session, CloseReason reason) {
         System.out.println("socket closed: " + reason.getReasonPhrase());
         playerNumber--;
+        clients.remove(this);
+        game.removePlayer(playerNumber);
     }
 
     @OnMessage

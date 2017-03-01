@@ -54,7 +54,7 @@ public final class Game {
 
     public void addPlayer(int playerNumber) {
         numberOfPlayers++;
-        players.add(new Tank(0, 0, Direction.UP, Tank.Type.PLAYER));
+        players.add(new Tank(0, 0, Direction.UP, Tank.Type.PLAYER, playerNumber));
     }
 
     public void movePlayer(int playerNumber, Direction dir) {
@@ -71,8 +71,9 @@ public final class Game {
             player.layedBomb();
             int locX = (player.getLocX()/13);
             int locY = (player.getLocY()/11);
-            int x = locX * (16 * 3);
-            int y = locY * (16 * 3);
+            int x = locX * (13);
+            int y = locY * (11);
+            System.out.println(x +"," + y +"," + locX + "," + locY + "," + player.getLocX() + "," + player.getLocY());
             Bomb bomb = new Bomb(x, y, player.getBombRange(), player);
             bombs.add(bomb);
             return bomb;
@@ -98,31 +99,31 @@ public final class Game {
         int left,right,up,down;
         left = right = up = down = 0;
         
-        for (int i = x; i < gameboard.length; i++) {
+        for (int i = x; i < gameboard.length && i < x + range; i++) {
             if(gameboard[i][y] != 0)
                 break;
             right++;
         }
         
-        for (int i = x; i > 0; i--) {
+        for (int i = x; i > 0 && i > x - range; i--) {
             if(gameboard[i][y] != 0)
                 break;
             left++;
         }
         
-        for (int i = y; i < gameboard.length; i++) {
+        for (int i = y; i < gameboard.length && i < y + range; i++) {
             if(gameboard[x][i] != 0)
                 break;
             down++;
         }
         
-        for (int i = y; i > 0; i--) {
+        for (int i = y; i > 0 && i > y - range; i--) {
             if(gameboard[x][i] != 0)
                 break;
             up++;
         }
         
-        return String.format(",%1$d,%2$d,%3$d,%4$d", left,right,up,down);
+        return String.format("%1$d,%2$d,%3$d,%4$d", left,right,up,down);
     }
     
     private void initializeGameBoard(int mapNumber) {
@@ -153,6 +154,19 @@ public final class Game {
             }
         },0, Constants.SECOND * 8);
         
+    }
+
+    public void removePlayer(int playerNumber) {
+        Tank player = null;
+        for(Tank p : players){
+            if (p.getPlayerNumber() == playerNumber) {
+                player = p;
+                break;
+            }
+        }
+        if(player != null){
+            players.remove(player);
+        }
     }
 
 }

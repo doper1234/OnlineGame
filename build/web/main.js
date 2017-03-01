@@ -43,11 +43,16 @@ function Bomb(bombId,x,y){
     this.x = x;
     this.y = y;
     this.exploded = false;
+    //alert(x +" " + y);
 }
 var bombImage = document.getElementById("bomb");
 var explosionCenter = document.getElementById("explosionCenter");
 var explosionup = document.getElementById("explosionUp");
-var explosionupCenter = document.getElementById("explosionUpCenter");
+var explosiondown = document.getElementById("explosionDown");
+var explosionleft = document.getElementById("explosionLeft");
+var explosionright = document.getElementById("explosionRight");
+var explosionHorizontalCenter = document.getElementById("explosionHorizontalCenter");
+var explosionVerticalCenter = document.getElementById("explosionVerticalCenter");
 var stagescreen = document.getElementById("stagescreen");
 var imageWidth = 320;
 var frameNumber = 0;
@@ -81,9 +86,12 @@ window.onload = function () {
         DrawPlayer(3);
         DrawPlayer(4);
         
-        context.drawImage(explosionCenter, 16 * (explosionFrame), 0, 16, 16, 8 * 32, 5 * 32, charSize, charSize);
-        context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, 8 * 32, 3 * 32, charSize, charSize);
-        context.drawImage(explosionupCenter, 16 * explosionFrame, 0, 16, 16, 8 * 32, 4 * 32, charSize, charSize);
+        
+        //context.drawImage(explosionVerticalCenter, 16 * bombFrame, 0, 16, 16, 48, 48, 48, 48);
+        //context.drawImage(explosionHorizontalCenter, 16 * bombFrame, 0, 16, 16, 96, 96, 48, 48);
+        //context.drawImage(explosionCenter, 16 * (explosionFrame), 0, 16, 16, 8 * 32, 5 * 32, charSize, charSize);
+        //context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, 8 * 32, 3 * 32, charSize, charSize);
+        //context.drawImage(explosionupCenter, 16 * explosionFrame, 0, 16, 16, 8 * 32, 4 * 32, charSize, charSize);
 
         bombFrame++,
         frameNumber++;
@@ -96,14 +104,31 @@ window.onload = function () {
         if (explosionFrame === 3)
             explosionFrame = 0;
     
-    }, 30);//interval frequency in milliseconds
+    }, 50);//interval frequency in milliseconds
 };
 
 
 function drawBombs(){
     bombs.forEach(function(bomb) {
-        if(bomb.exploded)
-            context.drawImage(explosionCenter, 16 * bombFrame, 0, 16, 16, bomb.x, bomb.y, 48, 48);
+        if(bomb.exploded){
+            context.drawImage(explosionCenter, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y, 48, 48);
+            for (var i = bomb.x+1; i <= bomb.x + (bomb.right-1); i++) {
+                context.drawImage(explosionHorizontalCenter, 16 * explosionFrame, 0, 16, 16, bomb.x + (i - bomb.x)*charSize, bomb.y, 48, 48);
+            }
+            for (var i = bomb.x-1; i >= bomb.x - (bomb.left-1); i--) {
+                context.drawImage(explosionHorizontalCenter, 16 * explosionFrame, 0, 16, 16, bomb.x - (i - bomb.x) - charSize, bomb.y, 48, 48);
+            }
+            for (var i = bomb.y+1; i <= bomb.y + (bomb.up-1); i++) {
+                context.drawImage(explosionVerticalCenter, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y + (i - bomb.y) - charSize, 48, 48);
+            }
+            for (var i = bomb.y-1; i >= bomb.y - (bomb.down-1); i--) {
+                context.drawImage(explosionVerticalCenter, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y - (i - bomb.y)*charSize, 48, 48);
+            }
+            context.drawImage(explosionright, 16 * explosionFrame, 0, 16, 16, bomb.x + (bomb.right * charSize), bomb.y, 48, 48);
+            context.drawImage(explosionleft, 16 * explosionFrame, 0, 16, 16, bomb.x - (bomb.left * charSize), bomb.y, 48, 48);
+            context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y - (bomb.up * charSize), 48, 48);
+            context.drawImage(explosiondown, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y + (bomb.down * charSize), 48, 48);
+        }
         else
             context.drawImage(bombImage, 16 * bombFrame, 0, 16, 16, bomb.x, bomb.y, 48, 48);
         console.log(bomb.x +", "+ bomb.y);
