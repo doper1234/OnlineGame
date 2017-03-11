@@ -9,14 +9,14 @@ package Game;
  *
  * @author Chris
  */
-public class Tank extends PlayerEntity{
+public class Player extends LivingEntity{
     
     public Type type;
     
     private int bombRange;
     private int bombCapacity;
     private int currentBombAmount;
-    private int playerNumber;
+    private final int playerNumber;
     
     public enum Type{
         PLAYER, ENEMY
@@ -30,8 +30,8 @@ public class Tank extends PlayerEntity{
         ONE, TWO, THREE, FOUR
     }
     
-    public Tank(int x, int y, Direction direc, Type type, int playerNo) {
-        super(x, y, direc, PlayerEntity.Health.DEFAULT_HEALTH);
+    public Player(int x, int y, Direction direc, Type type, int playerNo) {
+        super(x, y, direc, LivingEntity.Health.DEFAULT_HEALTH);
         this.type = type;
         bombRange = 2;
         bombCapacity = 10;

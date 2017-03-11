@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 
-function Enemy(){
-    
+function Enemy(id, x,y,level){
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.level = level;
+    this.isAlive = true;
 }

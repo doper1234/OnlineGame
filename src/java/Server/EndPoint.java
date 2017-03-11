@@ -2,9 +2,10 @@ package Server;
 
 import Game.BaseEntity.Direction;
 import Game.Bomb;
-import Game.PlayerEntity;
+import Game.Enemy;
+import Game.LivingEntity;
 import Game.Game;
-import Game.Tank;
+import Game.Player;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -71,6 +72,10 @@ public class EndPoint {
         Bomb bomb = null;
         System.out.println(message);
         String[] input = message.split(", ");
+        if(input[0].equalsIgnoreCase("message")){
+                broadcast(message);
+                return;
+        }
         message = input[1];
         int playerNo;
         try {
@@ -88,7 +93,7 @@ public class EndPoint {
             game.movePlayer(playerNo, Direction.RIGHT);
         } 
         
-        Tank player = game.getPlayer(playerNo);
+        Player player = game.getPlayer(playerNo);
         if (message.equalsIgnoreCase("bomb")){
             bomb = game.addBomb(player);
         }
@@ -142,6 +147,10 @@ public class EndPoint {
         return playerNumber;
     }
 
+    public void newEnemy(Enemy e){
+        broadcast("newenemy," + e.getId()+ "," + e.getLocX() + "," + e.getLocY() + "," + e.getDirection());
+    }
+    
     public void bombExploded(int bombId, String bombExplosionArea) {
         broadcast("bombexploded," + bombId + "," + bombExplosionArea);
     }

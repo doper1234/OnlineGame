@@ -20,6 +20,7 @@ public final class Constants {
     public static final int HOUR = MINUTE * 60;
     
     private static final List<Integer> bombIds = new ArrayList<>();
+    private static final List<Integer> enemyIds = new ArrayList<>();
     
     private Constants(){
     }
@@ -28,6 +29,12 @@ public final class Constants {
         int bombId = bombIds.size() +1;
         bombIds.add(bombId);
         return bombId;
+    }
+    
+    public static int getEnemyId(){
+        int enemyId = enemyIds.size() +1;
+        enemyIds.add(enemyId);
+        return enemyId;
     }
     
     public static void removeBombId(int bombId){

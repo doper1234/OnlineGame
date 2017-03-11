@@ -56,16 +56,29 @@ var explosionVerticalCenter = document.getElementById("explosionVerticalCenter")
 var stagescreen = document.getElementById("stagescreen");
 var imageWidth = 320;
 var frameNumber = 0;
+var basicFrameRate = 0;
 var bombFrame = 0;
 var explosionFrame = 0;
 var rowNumber = 0;
 var frameHeight = 32;
 var context;
+var chatText;
+var chatArea ;
+var chatButton;
+
 window.onload = function () {
 //    player1 = new Player("/Online2D/images/mario.png");
 //    player2 = new Player("/Online2D/images/player1.png");
 //    players.push(player1);
 //    players.push(player2);
+chatText = document.getElementById("chatText");
+chatArea = document.getElementById("chatArea");
+chatButton = document.getElementById("chatSendButton");
+chatButton.onclick = sendChatMessage;
+chatText.onkeydown = function(event){
+    if(event.keyCode === 13)
+        sendChatMessage();
+};
     var canvas = document.getElementById("coinAnimation");
     canvas.width = gameWidth;
     canvas.height = gameHeight;
@@ -75,7 +88,7 @@ window.onload = function () {
     MapGenerator();
     setInterval(function () {
 
-        explosionFrame++;
+        
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(stagescreen, 0, 0, gameWidth, gameHeight);
         
@@ -92,17 +105,20 @@ window.onload = function () {
         //context.drawImage(explosionCenter, 16 * (explosionFrame), 0, 16, 16, 8 * 32, 5 * 32, charSize, charSize);
         //context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, 8 * 32, 3 * 32, charSize, charSize);
         //context.drawImage(explosionupCenter, 16 * explosionFrame, 0, 16, 16, 8 * 32, 4 * 32, charSize, charSize);
-
-        bombFrame++,
-        frameNumber++;
-        if (bombFrame >= 2)
-            bombFrame = 0;
-        if (frameNumber === 2) {
-            frameNumber = 0;
-            bombFrame = 2;
+        basicFrameRate++;
+        if(basicFrameRate % 5 === 0){
+            explosionFrame++;
+            bombFrame++,
+            frameNumber++;
+            if (bombFrame >= 2)
+                bombFrame = 0;
+            if (frameNumber === 2) {
+                frameNumber = 0;
+                bombFrame = 2;
+            }
+            if (explosionFrame === 3)
+                explosionFrame = 0;
         }
-        if (explosionFrame === 3)
-            explosionFrame = 0;
     
     }, 50);//interval frequency in milliseconds
 };
@@ -124,10 +140,14 @@ function drawBombs(){
             for (var i = bomb.y-1; i >= bomb.y - (bomb.down-1); i--) {
                 context.drawImage(explosionVerticalCenter, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y - (i - bomb.y)*charSize, 48, 48);
             }
-            context.drawImage(explosionright, 16 * explosionFrame, 0, 16, 16, bomb.x + (bomb.right * charSize), bomb.y, 48, 48);
-            context.drawImage(explosionleft, 16 * explosionFrame, 0, 16, 16, bomb.x - (bomb.left * charSize), bomb.y, 48, 48);
-            context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y - (bomb.up * charSize), 48, 48);
-            context.drawImage(explosiondown, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y + (bomb.down * charSize), 48, 48);
+            if(bomb.right  === bomb.range)
+                context.drawImage(explosionright, 16 * explosionFrame, 0, 16, 16, bomb.x + (bomb.right * charSize), bomb.y, 48, 48);
+            if(bomb.left  === bomb.range)
+                context.drawImage(explosionleft, 16 * explosionFrame, 0, 16, 16, bomb.x - (bomb.left * charSize), bomb.y, 48, 48);
+            if(bomb.up  === bomb.range)
+                context.drawImage(explosionup, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y - (bomb.up * charSize), 48, 48);
+            if(bomb.down  === bomb.range)
+                context.drawImage(explosiondown, 16 * explosionFrame, 0, 16, 16, bomb.x, bomb.y + (bomb.down * charSize), 48, 48);
         }
         else
             context.drawImage(bombImage, 16 * bombFrame, 0, 16, 16, bomb.x, bomb.y, 48, 48);

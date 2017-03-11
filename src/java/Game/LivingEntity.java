@@ -9,18 +9,18 @@ package Game;
  *
  * @author Chris
  */
-public class PlayerEntity extends BaseEntity{
+public class LivingEntity extends BaseEntity{
     protected int health;
-    protected boolean isAlive, isInvulnerable;
+    protected boolean isInvulnerable;
     
-    public PlayerEntity(int x, int y, Direction direc, int health){
+    public LivingEntity(int x, int y, Direction direc, int health){
         super(x, y, direc);
         locX = x;
         locY = y;
         isAlive = true;
         isInvulnerable = true;
         this.health = health;
-        movementSpeed = 2;
+        movementSpeed = 3;
     }
     
     public void go(Direction direction){
@@ -57,14 +57,6 @@ public class PlayerEntity extends BaseEntity{
     public class Health{
         static final int DEFAULT_HEALTH = 1;
         
-    }
-    
-    public int getLocX(){
-        return locX;
-    }
-    
-    public int getLocY(){
-        return locY;
     }
     
     public Direction getDirection(){
